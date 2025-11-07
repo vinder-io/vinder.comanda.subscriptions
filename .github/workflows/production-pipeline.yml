@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push Docker image
+      - name: push docker image
         run: docker push vinderio/comanda.subscriptions:latest
 
       - name: deploy to VPS via SSH
