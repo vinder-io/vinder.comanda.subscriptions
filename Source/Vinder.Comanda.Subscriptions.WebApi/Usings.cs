@@ -10,9 +10,7 @@ global using Vinder.Comanda.Subscriptions.Application.Payloads.Traceability;
 global using Vinder.Comanda.Subscriptions.Application.Payloads.Subscription;
 
 global using Vinder.Comanda.Subscriptions.Infrastructure.IoC.Extensions;
-
 global using Vinder.Comanda.Subscriptions.CrossCutting.Configurations;
-global using Vinder.Comanda.Subscriptions.CrossCutting.Constants;
 
 global using Vinder.Dispatcher.Contracts;
 global using Vinder.IdentityProvider.Sdk.Extensions;
