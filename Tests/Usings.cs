@@ -26,8 +26,6 @@ global using Vinder.Comanda.Subscriptions.Application.Payloads;
 global using Vinder.Comanda.Subscriptions.Application.Gateways;
 global using Vinder.Comanda.Subscriptions.Application.Payloads.Subscription;
 
-global using Vinder.Comanda.Subscriptions.CrossCutting.Constants;
-
 global using Vinder.Comanda.Subscriptions.TestSuite.Fixtures;
 global using Vinder.Comanda.Subscriptions.TestSuite.Mocks;
 

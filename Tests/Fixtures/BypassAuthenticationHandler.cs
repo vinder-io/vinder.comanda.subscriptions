@@ -16,11 +16,6 @@ public sealed class BypassAuthenticationHandler(IOptionsMonitor<AuthenticationSc
         {
             new Claim(ClaimTypes.Name, "vinder.internal.bypass.user"),
             new Claim(ClaimTypes.NameIdentifier, "vinder.internal.bypass.user"),
-
-            new Claim(ClaimTypes.Role, Permissions.ViewActivities),
-            new Claim(ClaimTypes.Role, Permissions.ViewSubscriptions),
-            new Claim(ClaimTypes.Role, Permissions.CancelSubscription),
-            new Claim(ClaimTypes.Role, Permissions.Subscribe),
         };
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);
