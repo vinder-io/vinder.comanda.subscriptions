@@ -1,11 +1,12 @@
 namespace Vinder.Comanda.Subscriptions.WebApi.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/v1/subscriptions")]
 public sealed class SubscriptionsController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet]
-    [Authorize(Roles = Permissions.ViewSubscriptions)]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> GetSubscriptionsAsync(
         [FromQuery] SubscriptionsFetchParameters request, CancellationToken cancellation)
     {
@@ -21,7 +22,7 @@ public sealed class SubscriptionsController(IDispatcher dispatcher) : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = Permissions.Subscribe)]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> CreateCheckoutSessionAsync(
         [FromBody] CheckoutSessionCreationScheme request, CancellationToken cancellation)
     {
@@ -39,7 +40,7 @@ public sealed class SubscriptionsController(IDispatcher dispatcher) : Controller
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = Permissions.CancelSubscription)]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> CancelSubscriptionAsync(
         [FromQuery] SubscriptionCancelationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {

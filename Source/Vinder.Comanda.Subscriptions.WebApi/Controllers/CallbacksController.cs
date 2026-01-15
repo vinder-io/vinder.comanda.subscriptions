@@ -5,6 +5,7 @@ namespace Vinder.Comanda.Subscriptions.WebApi.Controllers;
 public sealed class CallbacksController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet("success")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> OnSuccessCallbackAsync(
         [FromQuery] CallbackSuccessfulCheckoutParameters request, CancellationToken cancellation)
     {
@@ -19,6 +20,7 @@ public sealed class CallbacksController(IDispatcher dispatcher) : ControllerBase
     }
 
     [HttpGet("cancel")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> OnCancelCallbackAsync(
         [FromQuery] CallbackFailedCheckoutParameters request, CancellationToken cancellation)
     {
