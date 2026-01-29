@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace Vinder.Comanda.Subscriptions.TestSuite.Fixtures;
 
@@ -24,14 +25,12 @@ public sealed class WebApplicationFixture : IAsyncLifetime
         Environment.SetEnvironmentVariable("Settings__Database__ConnectionString", _databaseFixture.ConnectionString);
         Environment.SetEnvironmentVariable("Settings__Database__DatabaseName", _databaseFixture.DatabaseName);
 
-        Environment.SetEnvironmentVariable("Settings__Observability__SeqServerUrl", "http://localhost:5341");
-        Environment.SetEnvironmentVariable("Settings__Observability__SentryDsn", "http://localhost:5342");
-
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
+                    services.AddLogging(logging => logging.ClearProviders());
                     services.AddAuthentication(options =>
                     {
                         options.DefaultAuthenticateScheme = "vinder.internal.bypass.authentication";
