@@ -5,6 +5,9 @@ public static class ObservabilityExtension
 {
     public static void AddObservability(this WebApplicationBuilder builder)
     {
+        if (builder.Environment.IsEnvironment("Testing"))
+            return;
+
         builder.Host.UseSerilog((context, services, logger) =>
         {
             var settings = services.GetRequiredService<ISettings>();

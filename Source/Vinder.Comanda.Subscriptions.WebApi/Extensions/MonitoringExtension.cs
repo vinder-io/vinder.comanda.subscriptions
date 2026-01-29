@@ -4,6 +4,9 @@ public static class MonitoringExtension
 {
     public static void AddMonitoring(this WebApplicationBuilder builder)
     {
+        if (builder.Environment.IsEnvironment("Testing"))
+            return;
+
         var settings = builder.Services
             .BuildServiceProvider()
             .GetRequiredService<ISettings>();
