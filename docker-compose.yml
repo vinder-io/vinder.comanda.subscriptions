@@ -27,8 +27,8 @@ services:
       Settings__Administration__Username: ${ADMIN_USERNAME}
       Settings__Administration__Password: ${ADMIN_PASSWORD}
 
-  vinder.comanda.payments.infrastructure.seq:
-    container_name: "vinder.comanda.payments.seq"
+  vinder.comanda.subscriptions.infrastructure.seq:
+    container_name: "vinder.comanda.subscriptions.seq"
     image: datalust/seq:latest
     restart: unless-stopped
     ports:
@@ -38,8 +38,8 @@ services:
       ACCEPT_EULA: "Y"
       SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_FIRSTRUN_ADMINPASSWORD}
     volumes:
-      - vinder.comanda.payments.infrastructure.seq:/data
+      - vinder.comanda.subscriptions.infrastructure.seq:/data
 
 volumes:
   vinder.comanda.subscriptions.infrastructure.mongo.database:
-  vinder.comanda.payments.infrastructure.seq:
+  vinder.comanda.subscriptions.infrastructure.seq:
