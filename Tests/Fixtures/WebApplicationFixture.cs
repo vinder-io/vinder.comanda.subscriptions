@@ -24,6 +24,9 @@ public sealed class WebApplicationFixture : IAsyncLifetime
         Environment.SetEnvironmentVariable("Settings__Database__ConnectionString", _databaseFixture.ConnectionString);
         Environment.SetEnvironmentVariable("Settings__Database__DatabaseName", _databaseFixture.DatabaseName);
 
+        Environment.SetEnvironmentVariable("Settings__Observability__SeqServerUrl", "http://localhost:5341");
+        Environment.SetEnvironmentVariable("Settings__Observability__SentryDsn", "http://localhost:5342");
+
         _factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
