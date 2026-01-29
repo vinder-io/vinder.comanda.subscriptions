@@ -30,7 +30,6 @@ public sealed class WebApplicationFixture : IAsyncLifetime
             {
                 builder.ConfigureServices(services =>
                 {
-                    services.AddLogging(logging => logging.ClearProviders());
                     services.AddAuthentication(options =>
                     {
                         options.DefaultAuthenticateScheme = "vinder.internal.bypass.authentication";
