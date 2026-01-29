@@ -4,7 +4,7 @@ public static class MonitoringExtension
 {
     public static void AddMonitoring(this WebApplicationBuilder builder)
     {
-        if (builder.Environment.IsEnvironment("Testing"))
+        if (!builder.Environment.IsDevelopment() || !builder.Environment.IsProduction())
             return;
 
         var settings = builder.Services
