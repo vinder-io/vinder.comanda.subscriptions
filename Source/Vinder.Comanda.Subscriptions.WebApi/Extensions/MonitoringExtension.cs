@@ -4,7 +4,8 @@ public static class MonitoringExtension
 {
     public static void AddMonitoring(this WebApplicationBuilder builder)
     {
-        if (!builder.Environment.IsDevelopment() || !builder.Environment.IsProduction())
+        // prevents sentry from being initialized in non-production/non-development environments (e.g., testing)
+        if (!builder.Environment.IsDevelopment() && !builder.Environment.IsProduction())
             return;
 
         var settings = builder.Services
@@ -18,6 +19,7 @@ public static class MonitoringExtension
             options.Environment = builder.Environment.EnvironmentName;
             options.TracesSampleRate = 1.0;
             options.Debug = true;
+            options.EnableLogs = true;
         });
     }
 }

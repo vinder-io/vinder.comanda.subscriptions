@@ -5,7 +5,8 @@ public static class ObservabilityExtension
 {
     public static void AddObservability(this WebApplicationBuilder builder)
     {
-        if (!builder.Environment.IsDevelopment() || !builder.Environment.IsProduction())
+        // prevents seq from being initialized in non-production/non-development environments (e.g., testing)
+        if (!builder.Environment.IsDevelopment() && !builder.Environment.IsProduction())
             return;
 
         builder.Host.UseSerilog((context, services, logger) =>
@@ -17,7 +18,14 @@ public static class ObservabilityExtension
                 .ReadFrom.Services(services)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Seq(settings.Observability.SeqServerUrl);
+                .WriteTo.Seq(settings.Observability.SeqServerUrl)
+                .WriteTo.Sentry(options =>
+                {
+                    options.Dsn = settings.Observability.SentryDsn;
+                    options.TracesSampleRate = 1.0;
+                    options.AttachStacktrace = true;
+                    options.Debug = true;
+                });
         });
     }
 }
