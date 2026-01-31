@@ -12,7 +12,7 @@ public static class SpecificationsExtension
             options.HideModels = true;
             options.HideSearch = true;
 
-            options.WithTitle("Vinder Comanda Subscriptions API");
+            options.WithTitle("comanda subscriptions | vinder.io");
             options.WithClassicLayout();
 
             if (environment.IsProduction())
