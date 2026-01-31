@@ -14,9 +14,9 @@ public sealed class SubscriptionEndpointTests(IntegrationEnvironmentFixture fact
     [Fact(DisplayName = "[e2e] - when GET /api/v1/subscriptions is called and there are subscriptions, 200 OK is returned with the subscriptions")]
     public async Task When_GetSubscriptions_IsCalled_AndThereAreSubscriptions_Then_200OkIsReturnedWithTheSubscriptions()
     {
-        /* arrange: resolve http client and repository instances from integration environment */
+        /* arrange: resolve http client and collection instances from integration environment */
         var httpClient = factory.HttpClient;
-        var repository = factory.Services.GetRequiredService<ISubcriptionRepository>();
+        var collection = factory.Services.GetRequiredService<ISubscriptionCollection>();
 
         /* arrange: create 3 active subscriptions to be inserted in the database */
         var subscriptions = _fixture.Build<Subscription>()
@@ -25,7 +25,7 @@ public sealed class SubscriptionEndpointTests(IntegrationEnvironmentFixture fact
             .CreateMany(3)
             .ToList();
 
-        await repository.InsertManyAsync(subscriptions, TestContext.Current.CancellationToken);
+        await collection.InsertManyAsync(subscriptions, cancellation: TestContext.Current.CancellationToken);
 
         /* act: send GET request to the subscriptions endpoint */
         var response = await httpClient.GetAsync("/api/v1/subscriptions", TestContext.Current.CancellationToken);
@@ -77,9 +77,9 @@ public sealed class SubscriptionEndpointTests(IntegrationEnvironmentFixture fact
     [Fact(DisplayName = "[e2e] - when DELETE /api/v1/subscriptions/{id} is called for an active subscription, 200 OK is returned with the canceled subscription")]
     public async Task When_CancelSubscription_IsCalled_ForActiveSubscription_Then_200OkIsReturnedWithCanceledSubscription()
     {
-        /* arrange: resolve http client and repository instances from integration environment */
+        /* arrange: resolve http client and collection instances from integration environment */
         var httpClient = factory.HttpClient;
-        var repository = factory.Services.GetRequiredService<ISubcriptionRepository>();
+        var collection = factory.Services.GetRequiredService<ISubscriptionCollection>();
 
         /* arrange: create and insert a single active subscription */
         var subscription = _fixture.Build<Subscription>()
@@ -87,7 +87,7 @@ public sealed class SubscriptionEndpointTests(IntegrationEnvironmentFixture fact
             .With(subscription => subscription.Metadata, SubscriptionMetadata.None)
             .Create();
 
-        await repository.InsertAsync(subscription, TestContext.Current.CancellationToken);
+        await collection.InsertAsync(subscription, cancellation: TestContext.Current.CancellationToken);
 
         /* act: send DELETE request to cancel the subscription */
         var response = await httpClient.DeleteAsync($"/api/v1/subscriptions/{subscription.Id}", TestContext.Current.CancellationToken);

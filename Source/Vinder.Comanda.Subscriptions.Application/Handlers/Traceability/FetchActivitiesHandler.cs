@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Subscriptions.Application.Handlers.Traceability;
 
-public sealed class FetchActivitiesHandler(IActivityRepository repository) :
+public sealed class FetchActivitiesHandler(IActivityCollection collection) :
     IMessageHandler<ActivityFetchParameters, Result<PaginationScheme<ActivityDetailsScheme>>>
 {
     public async Task<Result<PaginationScheme<ActivityDetailsScheme>>> HandleAsync(
@@ -14,8 +14,8 @@ public sealed class FetchActivitiesHandler(IActivityRepository repository) :
             .WithPagination(message.Pagination)
             .Build();
 
-        var activities = await repository.GetActivitiesAsync(filters, cancellation: cancellation);
-        var total = await repository.CountAsync(filters, cancellation: cancellation);
+        var activities = await collection.GetActivitiesAsync(filters, cancellation: cancellation);
+        var total = await collection.CountAsync(filters, cancellation: cancellation);
 
         var pagination = new PaginationScheme<ActivityDetailsScheme>
         {

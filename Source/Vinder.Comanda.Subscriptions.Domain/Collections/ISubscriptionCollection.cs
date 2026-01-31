@@ -1,8 +1,8 @@
-namespace Vinder.Comanda.Subscriptions.Domain.Repositories;
+namespace Vinder.Comanda.Subscriptions.Domain.Collections;
 
-public interface ISubcriptionRepository : IBaseRepository<Subscription>
+public interface ISubscriptionCollection : IAggregateCollection<Subscription>
 {
-    public Task<IReadOnlyCollection<Subscription>> GetSubscriptionsAsync(
+    public Task<IReadOnlyCollection<Subscription>> FilterSubscriptionsAsync(
         SubscriptionFilters filters,
         CancellationToken cancellation = default
     );

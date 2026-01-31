@@ -1,11 +1,9 @@
 global using Vinder.Internal.Infrastructure.Persistence;
 global using Vinder.Internal.Infrastructure.Persistence.Pipelines;
-global using Vinder.Internal.Infrastructure.Persistence.Repositories;
 
-global using Vinder.Comanda.Subscriptions.Domain.Entities;
-global using Vinder.Comanda.Subscriptions.Domain.Entities.Enums;
+global using Vinder.Comanda.Subscriptions.Domain.Aggregates;
 global using Vinder.Comanda.Subscriptions.Domain.Filtering;
-global using Vinder.Comanda.Subscriptions.Domain.Repositories;
+global using Vinder.Comanda.Subscriptions.Domain.Collections;
 global using Vinder.Comanda.Subscriptions.Domain.Concepts;
 global using Vinder.Comanda.Subscriptions.Domain.Errors;
 

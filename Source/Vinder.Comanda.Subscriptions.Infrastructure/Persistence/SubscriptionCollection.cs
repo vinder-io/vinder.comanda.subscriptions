@@ -1,10 +1,10 @@
-namespace Vinder.Comanda.Subscriptions.Infrastructure.Repositories;
+namespace Vinder.Comanda.Subscriptions.Infrastructure.Persistence;
 
-public sealed class SubscriptionRepository(IMongoDatabase database) :
-    BaseRepository<Subscription>(database, Collections.Subscriptions),
-    ISubcriptionRepository
+public sealed class SubscriptionCollection(IMongoDatabase database) :
+    AggregateCollection<Subscription>(database, Collections.Subscriptions),
+    ISubscriptionCollection
 {
-    public async Task<IReadOnlyCollection<Subscription>> GetSubscriptionsAsync(
+    public async Task<IReadOnlyCollection<Subscription>> FilterSubscriptionsAsync(
         SubscriptionFilters filters, CancellationToken cancellation = default)
     {
         var pipeline = PipelineDefinitionBuilder

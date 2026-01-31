@@ -1,4 +1,4 @@
-namespace Vinder.Comanda.Subscriptions.Domain.Entities.Enums;
+namespace Vinder.Comanda.Subscriptions.Domain.Concepts;
 
 public enum Status
 {

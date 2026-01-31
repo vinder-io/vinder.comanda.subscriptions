@@ -3,8 +3,7 @@ global using System.Diagnostics.CodeAnalysis;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 
-global using Vinder.Comanda.Subscriptions.Domain.Repositories;
-global using Vinder.Comanda.Subscriptions.Domain.Concepts;
+global using Vinder.Comanda.Subscriptions.Domain.Collections;
 
 global using Vinder.Comanda.Subscriptions.CrossCutting.Configurations;
 global using Vinder.Comanda.Subscriptions.CrossCutting.Exceptions;
@@ -15,10 +14,10 @@ global using Vinder.Comanda.Subscriptions.Application.Payloads.Subscription;
 global using Vinder.Comanda.Subscriptions.Application.Validators.Subscription;
 
 global using Vinder.Comanda.Subscriptions.Infrastructure.Gateways;
-global using Vinder.Comanda.Subscriptions.Infrastructure.Repositories;
+global using Vinder.Comanda.Subscriptions.Infrastructure.Persistence;
 
 global using Vinder.Internal.Essentials.Contracts;
-global using Vinder.Internal.Infrastructure.Persistence.Repositories;
+global using Vinder.Internal.Infrastructure.Persistence;
 
 global using Vinder.Dispatcher.Extensions;
 

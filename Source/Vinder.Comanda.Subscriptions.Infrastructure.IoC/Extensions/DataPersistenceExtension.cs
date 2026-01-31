@@ -13,7 +13,7 @@ public static class DataPersistenceExtension
             return database;
         });
 
-        services.AddTransient<IActivityRepository, ActivityRepository>();
-        services.AddTransient<ISubcriptionRepository, SubscriptionRepository>();
+        services.AddTransient<IActivityCollection, ActivityCollection>();
+        services.AddTransient<ISubscriptionCollection, SubscriptionCollection>();
     }
 }

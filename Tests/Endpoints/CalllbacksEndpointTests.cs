@@ -14,9 +14,9 @@ public sealed class CallbacksEndpointTests(IntegrationEnvironmentFixture factory
     [Fact(DisplayName = "[e2e] - when GET /api/v1/callback/success is called, 200 OK is returned with the updated subscription")]
     public async Task When_OnSuccessCallback_IsCalled_Then_200OkIsReturnedWithUpdatedSubscription()
     {
-        /* arrange: resolve http client and repository instances from integration environment */
+        /* arrange: resolve http client and collection instances from integration environment */
         var httpClient = factory.HttpClient;
-        var repository = factory.Services.GetRequiredService<ISubcriptionRepository>();
+        var collection = factory.Services.GetRequiredService<ISubscriptionCollection>();
 
         /* arrange: create a subscription that will be marked active by the callback */
         var subscription = _fixture.Build<Subscription>()
@@ -24,7 +24,7 @@ public sealed class CallbacksEndpointTests(IntegrationEnvironmentFixture factory
             .With(subscription => subscription.Metadata, SubscriptionMetadata.None)
             .Create();
 
-        await repository.InsertAsync(subscription, TestContext.Current.CancellationToken);
+        await collection.InsertAsync(subscription, cancellation: TestContext.Current.CancellationToken);
 
         /* act: send GET request to the success callback endpoint */
         var response = await httpClient.GetAsync("/api/v1/callback/success?sessionId=session_XXXXXXXXX", TestContext.Current.CancellationToken);
@@ -44,9 +44,9 @@ public sealed class CallbacksEndpointTests(IntegrationEnvironmentFixture factory
     [Fact(DisplayName = "[e2e] - when GET /api/v1/callback/cancel is called, 200 OK is returned with the failed subscription")]
     public async Task When_OnCancelCallback_IsCalled_Then_200OkIsReturnedWithFailedSubscription()
     {
-        /* arrange: resolve http client and repository instances from integration environment */
+        /* arrange: resolve http client and collection instances from integration environment */
         var httpClient = factory.HttpClient;
-        var repository = factory.Services.GetRequiredService<ISubcriptionRepository>();
+        var collection = factory.Services.GetRequiredService<ISubscriptionCollection>();
 
         /* arrange: create a subscription that will be failed by the callback */
         var subscription = _fixture.Build<Subscription>()
@@ -54,7 +54,7 @@ public sealed class CallbacksEndpointTests(IntegrationEnvironmentFixture factory
             .With(subscription => subscription.Metadata, SubscriptionMetadata.None)
             .Create();
 
-        await repository.InsertAsync(subscription, TestContext.Current.CancellationToken);
+        await collection.InsertAsync(subscription, cancellation: TestContext.Current.CancellationToken);
 
         var response = await httpClient.GetAsync("/api/v1/callback/cancel?sessionId=session_XXXXXXXXX", TestContext.Current.CancellationToken);
         var content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);

@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Subscriptions.Application.Handlers.Subscription;
 
-public sealed class CreateCheckoutSessionHandler(ISubscriptionGateway subscriptionGateway, ISubcriptionRepository repository) :
+public sealed class CreateCheckoutSessionHandler(ISubscriptionGateway subscriptionGateway, ISubscriptionCollection collection) :
     IMessageHandler<CheckoutSessionCreationScheme, Result<CheckoutSession>>
 {
     public async Task<Result<CheckoutSession>> HandleAsync(
@@ -20,7 +20,7 @@ public sealed class CreateCheckoutSessionHandler(ISubscriptionGateway subscripti
             return Result<CheckoutSession>.Failure(SubscriptionErrors.PlanNotSupported);
         }
 
-        await repository.InsertAsync(subscription, cancellation);
+        await collection.InsertAsync(subscription, cancellation: cancellation);
 
         return await subscriptionGateway.CreateCheckoutSessionAsync(message, cancellation);
     }

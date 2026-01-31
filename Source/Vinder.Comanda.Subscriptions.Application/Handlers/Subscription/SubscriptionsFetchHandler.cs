@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Subscriptions.Application.Handlers.Subscription;
 
-public sealed class SubscriptionsFetchHandler(ISubcriptionRepository repository) :
+public sealed class SubscriptionsFetchHandler(ISubscriptionCollection collection) :
     IMessageHandler<SubscriptionsFetchParameters, Result<PaginationScheme<SubscriptionScheme>>>
 {
     public async Task<Result<PaginationScheme<SubscriptionScheme>>> HandleAsync(
@@ -16,8 +16,8 @@ public sealed class SubscriptionsFetchHandler(ISubcriptionRepository repository)
             .WithSort(parameters.Sort)
             .Build();
 
-        var subscriptions = await repository.GetSubscriptionsAsync(filters, cancellation);
-        var totalCount = await repository.CountSubscriptionsAsync(filters, cancellation);
+        var subscriptions = await collection.FilterSubscriptionsAsync(filters, cancellation);
+        var totalCount = await collection.CountSubscriptionsAsync(filters, cancellation);
 
         var pagination = new PaginationScheme<SubscriptionScheme>
         {

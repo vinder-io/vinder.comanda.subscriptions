@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Subscriptions.Infrastructure.Gateways;
 
-public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISubscriptionGateway
+public sealed class SubscriptionGateway(ISubscriptionCollection collection) : ISubscriptionGateway
 {
     public async Task<Result<CheckoutSession>> CreateCheckoutSessionAsync(
         CheckoutSessionCreationScheme parameters, CancellationToken cancellation = default)
@@ -33,7 +33,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
             .WithSubscriberId(subscriberId)
             .Build();
 
-        var subscriptions = await repository.GetSubscriptionsAsync(filters, cancellation);
+        var subscriptions = await collection.FilterSubscriptionsAsync(filters, cancellation);
         var subscription = subscriptions.FirstOrDefault();
 
         if (subscription is null)
@@ -44,7 +44,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
         subscription.Metadata = new SubscriptionMetadata(Identifier: session.SubscriptionId);
         subscription.Status = Status.Active;
 
-        await repository.UpdateAsync(subscription, cancellation);
+        await collection.UpdateAsync(subscription, cancellation);
 
         return Result<Subscription>.Success(subscription);
     }
@@ -65,7 +65,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
             .WithSubscriberId(subscriberId)
             .Build();
 
-        var subscriptions = await repository.GetSubscriptionsAsync(filters, cancellation);
+        var subscriptions = await collection.FilterSubscriptionsAsync(filters, cancellation);
         var subscription = subscriptions.FirstOrDefault();
 
         if (subscription is null)
@@ -76,7 +76,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
         subscription.Metadata = SubscriptionMetadata.None;
         subscription.Status = Status.None;
 
-        await repository.UpdateAsync(subscription, cancellation);
+        await collection.UpdateAsync(subscription, cancellation);
 
         return Result<Subscription>.Success(subscription);
     }
@@ -89,7 +89,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
             .WithIdentifier(parameters.SubscriptionId)
             .Build();
 
-        var subscriptions = await repository.GetSubscriptionsAsync(filters, cancellation);
+        var subscriptions = await collection.FilterSubscriptionsAsync(filters, cancellation);
         var subscription = subscriptions.FirstOrDefault();
 
         if (subscription is null)
@@ -110,7 +110,7 @@ public sealed class SubscriptionGateway(ISubcriptionRepository repository) : ISu
         subscription.Status = Status.Canceled;
         subscription.Metadata = SubscriptionMetadata.None;
 
-        await repository.UpdateAsync(subscription, cancellation);
+        await collection.UpdateAsync(subscription, cancellation);
 
         return Result<Subscription>.Success(subscription);
     }

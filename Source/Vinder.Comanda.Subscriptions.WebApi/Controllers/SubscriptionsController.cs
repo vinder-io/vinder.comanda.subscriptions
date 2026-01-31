@@ -7,7 +7,7 @@ public sealed class SubscriptionsController(IDispatcher dispatcher) : Controller
 {
     [HttpGet]
     [Stability(Stability.Stable)]
-    public async Task<IActionResult> GetSubscriptionsAsync(
+    public async Task<IActionResult> FilterSubscriptionsAsync(
         [FromQuery] SubscriptionsFetchParameters request, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request, cancellation);

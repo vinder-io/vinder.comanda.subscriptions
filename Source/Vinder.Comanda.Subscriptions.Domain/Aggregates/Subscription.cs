@@ -1,6 +1,6 @@
-namespace Vinder.Comanda.Subscriptions.Domain.Entities;
+namespace Vinder.Comanda.Subscriptions.Domain.Aggregates;
 
-public sealed class Subscription : Entity
+public sealed class Subscription : Aggregate
 {
     public Plan Plan { get; set; } = Plan.None;
     public Status Status { get; set; } = Status.None;
